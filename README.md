@@ -1,59 +1,112 @@
-# SmartDevHub
+# 🚀 Smart Developer Hub
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.9.
+An AI-powered developer assistant built with **Angular 19** and **Google Gemini GenAI**. This tool helps developers analyze error logs, generate SQL/Regex from natural language, and review code screenshots — all powered by Gemini's AI capabilities.
 
-## Development server
+## ✨ Features
 
-To start a local development server, run:
+### 1. 🔍 Log Analyzer
+Paste an error log or stack trace, and Gemini will:
+- Identify the most likely line causing the error
+- Explain the root cause in plain language
+- Suggest a code fix
+
+### 2. ⚡ SQL & Regex Generator
+Describe what you need in Vietnamese or English, and Gemini will generate:
+- SQL queries
+- Regular expressions
+- Code snippets
+
+### 3. 🖼️ Code Reviewer (Multimodal)
+Upload a screenshot of your code or system diagram, and Gemini will:
+- Read and understand the image
+- Review for clean code practices
+- Flag potential security issues
+
+## 🏗️ Architecture
+
+```
+Browser (Angular) → Express SSR Server (server.ts) → @google/genai SDK → Google Gemini API
+```
+
+- **API Key Security**: The Gemini API key lives only on the server side (`process.env`), never exposed to the browser.
+- **Server-Side Proxy**: The Angular SSR Express server doubles as the API backend, handling Gemini SDK calls at `/api/gemini/*`.
+
+## 🛠️ Tech Stack
+
+| Layer      | Technology                          |
+|------------|-------------------------------------|
+| Frontend   | Angular 19, RxJS, Reactive Forms    |
+| Backend    | Express (via Angular SSR)           |
+| AI         | Google Gemini GenAI SDK (`@google/genai`) |
+| Language   | TypeScript                          |
+| Styling    | SCSS                                |
+
+## 🚀 Getting Started
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18+)
+- [Angular CLI](https://angular.dev/tools/cli) (`npm install -g @angular/cli`)
+- A [Google Gemini API Key](https://aistudio.google.com/apikey)
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone <your-repo-url>
+cd smart-dev-hub
+
+# Install dependencies
+npm install
+```
+
+### Running the App
+
+```bash
+# Set your Gemini API key
+set GEMINI_API_KEY=your-api-key-here
+
+# Start the development server
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open your browser at `http://localhost:4200/`.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Building for Production
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Build artifacts are stored in the `dist/` directory.
 
-## Running unit tests
+## 📁 Project Structure
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+```
+src/
+├── server.ts                  # Express server + Gemini API endpoints
+├── app/
+│   ├── core/
+│   │   └── gemini.service.ts  # Angular service to call backend API
+│   ├── app.config.ts          # App providers (HttpClient, Router, etc.)
+│   ├── app.routes.ts          # Feature routing
+│   └── app.component.ts       # Root component
+└── styles.scss                # Global styles
+```
+
+## 🧪 Running Tests
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## 📚 What I'm Learning
 
-For end-to-end (e2e) testing, run:
+- Secure API key management (server-side only)
+- AI streaming with `generateContentStream()` + RxJS
+- Multimodal AI (image → text) with Gemini
+- Angular Reactive Forms, Standalone Components, and lazy-loaded routes
+- Building a full-stack app with Angular SSR
 
-```bash
-ng e2e
-```
+## 📄 License
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project is for learning purposes.
