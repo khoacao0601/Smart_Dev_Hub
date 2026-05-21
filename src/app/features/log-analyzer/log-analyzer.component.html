@@ -2,15 +2,21 @@
   <!-- LEFT: Input -->
   <div class="input-panel">
     <h2>📋 Paste your error log</h2>
-    <textarea [formControl]="logInput" placeholder="Paste your error log here..."></textarea>
-    <button (click)="analyze()" [disabled]="isLoading">
-      {{ isLoading ? 'Analyzing...' : 'Analyze' }}
-    </button>
+    <textarea
+      [formControl]="logInput"
+      placeholder="Paste your error log here..."
+      style="width: 100%; box-sizing: border-box; height: 10rem;"
+    ></textarea>
+    <div class="button-actions">
+      <button (click)="analyze()" [disabled]="isLoading">
+        {{ isLoading ? "Analyzing..." : "Analyze" }}
+      </button>
+    </div>
   </div>
 
   <!-- RIGHT: Output -->
   <div class="output-panel">
     <h2>🤖 AI Analysis</h2>
-    <div class="result">{{ result || 'Results will appear here...' }}</div>
+    <div class="result">{{ result || "Results will appear here..." }}</div>
   </div>
 </div>
