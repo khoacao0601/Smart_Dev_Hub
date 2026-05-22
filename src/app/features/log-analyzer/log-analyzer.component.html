@@ -1,22 +1,48 @@
 <div class="analyzer-container">
-  <!-- LEFT: Input -->
-  <div class="input-panel">
-    <h2>📋 Paste your error log</h2>
-    <textarea
-      [formControl]="logInput"
-      placeholder="Paste your error log here..."
-      style="width: 100%; box-sizing: border-box; height: 10rem;"
-    ></textarea>
-    <div class="button-actions">
-      <button (click)="analyze()" [disabled]="isLoading">
-        {{ isLoading ? "Analyzing..." : "Analyze" }}
+  
+  <!-- LEFT PANE: Input -->
+  <div class="pane">
+    <div class="pane-header">
+      <h2><span class="icon">📋</span> Input Log</h2>
+    </div>
+    
+    <div class="pane-content">
+      <textarea 
+        class="log-textarea"
+        [formControl]="logInput" 
+        placeholder="Paste your error log or stack trace here...&#10;&#10;Example:&#10;TypeError: Cannot read properties of undefined (reading 'map')&#10;    at UserList (/src/components/UserList.js:12:24)"
+      ></textarea>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn-primary" (click)="analyze()" [disabled]="isLoading || !logInput.value?.trim()">
+        @if (isLoading) {
+          <span class="spinner"></span> Analyzing...
+        } @else {
+          ✨ Analyze Log
+        }
       </button>
     </div>
   </div>
 
-  <!-- RIGHT: Output -->
-  <div class="output-panel">
-    <h2>🤖 AI Analysis</h2>
-    <div class="result">{{ result || "Results will appear here..." }}</div>
+  <!-- RIGHT PANE: Output -->
+  <div class="pane">
+    <div class="pane-header">
+      <h2><span class="icon">🤖</span> AI Analysis</h2>
+    </div>
+    
+    <div class="pane-content">
+      <div class="result-area">
+        @if (result) {
+          <div class="result-text">{{ result }}</div>
+        } @else {
+          <div class="empty-state">
+            <div class="empty-icon">🔍</div>
+            <p>Paste an error log and click Analyze to see the root cause and suggested fix.</p>
+          </div>
+        }
+      </div>
+    </div>
   </div>
+
 </div>

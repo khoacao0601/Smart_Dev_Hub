@@ -19,11 +19,18 @@ const angularApp = new AngularNodeAppEngine();
 app.use(express.json());
 
 app.post('/api/gemini/analyze-log', async (req, res) => {
-  const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
-    contents: `Analyze this error log and explain the root cause:\n${req.body.log}`,
-  });
-  res.json({ result: response.text });
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: `Analyze this error log and explain the root cause:\n${req.body.log}`,
+    });
+    res.json({ result: response.text });
+  } catch (error: any) {
+    console.error('Gemini API Error:', error.message || error);
+    res.status(503).json({ 
+      result: `⚠️ AI Service Unavailable: The model is currently experiencing high demand. Please try again in a few moments.\n\n(Error: ${error.message || '503 Service Unavailable'})` 
+    });
+  }
 });
 
 // error handling to your endpoint so the app doesn't crash if Gemini returns an error

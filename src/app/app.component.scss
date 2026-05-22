@@ -1,0 +1,24 @@
+.app-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.main-content {
+  background-color: var(--bg-app);
+  overflow-y: auto;
+  height: 100vh;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .app-layout {
+    grid-template-columns: 1fr;
+    
+    /* On mobile, we hide the sidebar by default for now */
+    app-sidebar {
+      display: none;
+    }
+  }
+}
