@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "functions": {
+    "api/index.mjs": {
+      "includeFiles": "dist/smart-dev-hub/**"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.mjs"
+    }
+  ]
+}

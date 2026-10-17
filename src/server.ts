@@ -9,8 +9,6 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { GoogleGenAI } from '@google/genai';
 
-const ai = new GoogleGenAI({ apiKey: process.env['GEMINI_API_KEY'] });
-
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 
@@ -20,6 +18,7 @@ app.use(express.json());
 
 app.post('/api/gemini/analyze-log', async (req, res) => {
   try {
+    const ai = new GoogleGenAI({ apiKey: process.env['GEMINI_API_KEY'] });
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: `Analyze this error log and explain the root cause:\n${req.body.log}`,
@@ -33,19 +32,6 @@ app.post('/api/gemini/analyze-log', async (req, res) => {
   }
 });
 
-// error handling to your endpoint so the app doesn't crash if Gemini returns an error
-app.post('/api/gemini/analyze-log', async (req, res) => {
-  try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: `Analyze this error log and explain the root cause:\n${req.body.log}`,
-    });
-    res.json({ result: response.text });
-  } catch (error) {
-    console.error('Gemini API error:', error);
-    res.status(500).json({ error: 'Failed to analyze log' });
-  }
-});
 
 /**
  * Serve static files from /browser
